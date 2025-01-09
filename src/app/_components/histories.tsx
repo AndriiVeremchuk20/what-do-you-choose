@@ -3,7 +3,7 @@
 import * as motion from "motion/react-client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { History } from "~/config/histories";
+import { type History } from "~/config/histories";
 
 export const HistoriesList = ({ arr }: { arr: History[] }) => {
   return (
