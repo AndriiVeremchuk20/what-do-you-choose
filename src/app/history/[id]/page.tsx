@@ -1,11 +1,11 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Box } from "~/app/_components/lib";
 import { TypeAnimation } from "react-type-animation";
 import { api } from "~/trpc/react";
 import { useStory } from "~/app/_hooks/useStory";
-import {type Message } from "~/services/openai/schema";
+import { type Message } from "~/services/openai/schema";
 import { Loader } from "~/app/_components/lib/loaded";
 
 export default function HistoryPage() {
@@ -15,14 +15,12 @@ export default function HistoryPage() {
   const [typed, setTyped] = useState<boolean>(false);
   const [storySteps, setStorySteps] = useState<Message[]>([]);
 
-  const nextStoryMutation = api.openai.generateText.useMutation({
-    onSuccess(data) {
-      console.log(data);
+  const nextStoryMutation = api.openai.generateText.useQuery(
+    { storyText: story?.description ?? "ping", messages: storySteps },
+    {
+      enabled: isStarted,
     },
-    onError(err) {
-      console.log(err);
-    },
-  });
+  );
 
   const handleOptionClick = (option: string) => {
     setStorySteps((prev) => [
@@ -33,18 +31,9 @@ export default function HistoryPage() {
       },
       { role: "user", content: option },
     ]);
-
-
   };
 
   const handleAnimationEnd = () => setTyped(true);
-
-  useEffect(() => {
-    if (isStarted)
-      nextStoryMutation.mutate({ storyText:story?.description ?? "red potato", messages: storySteps });
-  }, 
-// eslint-disable-next-line
-  [isStarted, storySteps]);
 
   if (!isStarted)
     return (

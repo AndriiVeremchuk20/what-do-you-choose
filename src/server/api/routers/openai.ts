@@ -8,7 +8,7 @@ export const openAIRouter = createTRPCRouter({
     .input(
       z.object({ storyText: z.string(), messages: z.array(messageSchema) }),
     )
-    .mutation(async ({ input }) => {
+    .query(async ({ input }) => {
       const { storyText, messages } = input;
 
       const nextPartStory = await continueStory(storyText, messages);

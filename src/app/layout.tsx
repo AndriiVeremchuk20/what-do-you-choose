@@ -14,8 +14,8 @@ export const metadata: Metadata = {
 };
 
 // load font
-const googlePixelifySans = localFont({
-  src: "../../public/fonts/PixelifySans-VariableFont_wght.ttf",
+const googleGEO = localFont({
+  src: "../../public/fonts/Geo-Regular.ttf",
 });
 
 export default function RootLayout({
@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body
-        className={`${googlePixelifySans.className} bg-black text-2xl text-white`}
+        className={`${googleGEO.className} bg-black text-2xl text-white`}
       >
         <TRPCReactProvider>{children}</TRPCReactProvider>
 
