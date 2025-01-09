@@ -7,7 +7,7 @@ export const Box = (props: BoxProps) => {
   return (
     <div
       {...props}
-      className={twMerge(props.className, "w-full rounded-lg border-2 p-5")}
+      className={twMerge(props.className, "w-full p-5")}
     />
   );
 };
