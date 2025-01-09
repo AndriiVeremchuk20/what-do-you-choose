@@ -7,9 +7,9 @@ export const responseStorySchema = z.object({
 
 export type Story = z.infer<typeof responseStorySchema>;
 
-export const parseStory = (rawText: string) => {
+export const parseStory = (rawText: string): Story => {
   try {
-    const jsonData = JSON.parse(rawText);
+    const jsonData = JSON.parse(rawText) as Story;
     const parsedData = responseStorySchema.parse(jsonData);
 
     return parsedData;

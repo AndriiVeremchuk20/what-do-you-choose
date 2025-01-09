@@ -5,7 +5,7 @@ import { Button, Box } from "~/app/_components/lib";
 import { TypeAnimation } from "react-type-animation";
 import { api } from "~/trpc/react";
 import { useStory } from "~/app/_hooks/useStory";
-import { Message } from "~/services/openai/schema";
+import {type Message } from "~/services/openai/schema";
 import { Loader } from "~/app/_components/lib/loaded";
 
 export default function HistoryPage() {
@@ -42,7 +42,9 @@ export default function HistoryPage() {
   useEffect(() => {
     if (isStarted)
       nextStoryMutation.mutate({ storyText:story?.description ?? "red potato", messages: storySteps });
-  }, [isStarted, storySteps]);
+  }, 
+// eslint-disable-next-line
+  [isStarted, storySteps]);
 
   if (!isStarted)
     return (

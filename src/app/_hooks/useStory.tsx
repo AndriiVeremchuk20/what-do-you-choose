@@ -5,7 +5,7 @@ import Histories from "~/config/histories";
 
 export const useStory = () => {
   const { id } = useParams();
-  const history = Histories.filter((h) => h.id + "" === id)[0];
+  const history = Histories.find((h) => h.id + "" === id);
 
   return history ?? null;
 };

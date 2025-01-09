@@ -1,6 +1,6 @@
 import OpenAI, { OpenAIError } from "openai";
 import { env } from "~/env";
-import { Message, parseStory } from "./schema";
+import { type Message, parseStory } from "./schema";
 
 const OpenAIClient = new OpenAI({ apiKey: env.OPEN_AI_API_KEY });
 
