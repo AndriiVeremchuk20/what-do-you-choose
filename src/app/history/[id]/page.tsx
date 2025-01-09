@@ -6,7 +6,7 @@ import { TypeAnimation } from "react-type-animation";
 import { api } from "~/trpc/react";
 import { useStory } from "~/app/_hooks/useStory";
 import { type Message } from "~/services/openai/schema";
-import { Loader } from "~/app/_components/lib/loaded";
+import { Loader } from "~/app/_components/lib/loader";
 
 export default function HistoryPage() {
   const story = useStory();
@@ -15,7 +15,7 @@ export default function HistoryPage() {
   const [typed, setTyped] = useState<boolean>(false);
   const [storySteps, setStorySteps] = useState<Message[]>([]);
 
-  const nextStoryMutation = api.openai.generateText.useQuery(
+  const nextStoryQuery = api.openai.generateText.useQuery(
     { storyText: story?.description ?? "ping", messages: storySteps },
     {
       enabled: isStarted,
@@ -27,7 +27,7 @@ export default function HistoryPage() {
       ...prev,
       {
         role: "assistant",
-        content: nextStoryMutation.data?.story ?? "improvisate",
+        content: nextStoryQuery.data?.story ?? "improvisate",
       },
       { role: "user", content: option },
     ]);
@@ -64,21 +64,22 @@ export default function HistoryPage() {
 
   return (
     <main className="flex h-screen items-center justify-center bg-black text-white">
-      <Box>
-        {nextStoryMutation.isPending ? (
+    <div className="w-3/4">  
+	<Box className="flex flex-col space-y-5">
+        {nextStoryQuery.isPending ? (
           <Loader />
         ) : (
           <>
             <TypeAnimation
               className="self-start text-left"
-              sequence={[nextStoryMutation.data?.story ?? "red potato"]}
+              sequence={[nextStoryQuery.data?.story ?? "red potato"]}
               speed={30}
               repeat={2}
             />
 
             {typed && (
-              <div className="flex justify-center space-x-5">
-                {nextStoryMutation.data?.options.map((o, i) => (
+              <div className="bottom-1 flex justify-center space-x-5">
+                {nextStoryQuery.data?.options.map((o, i) => (
                   <Button key={i} onClick={() => handleOptionClick(o)}>
                     {o}
                   </Button>
@@ -88,6 +89,7 @@ export default function HistoryPage() {
           </>
         )}
       </Box>
+	  </div>
     </main>
   );
 }
