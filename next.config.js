@@ -5,6 +5,18 @@
 import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+  images: {
+    minimumCacheTTL: 60,
+    domains: [
+      "files.oaiusercontent.com",
+      "imgcdn.stablediffusionweb.com",
+      "example.com",
+      "ik.imagekit.io",
+      "oaidalleapiprodscus.blob.core.windows.net",
+    ],
+    loader: "default",
+  },
+};
 
 export default config;

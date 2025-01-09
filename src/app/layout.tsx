@@ -1,9 +1,11 @@
 import "~/styles/globals.css";
 
+import localFont from "next/font/local";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "~/trpc/react";
+import Footer from "./_components/footer";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -11,13 +13,22 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
+// load font
+const googlePixelifySans = localFont({
+  src: "../../public/fonts/PixelifySans-VariableFont_wght.ttf",
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body>
+      <body
+        className={`${googlePixelifySans.className} bg-black text-2xl text-white`}
+      >
         <TRPCReactProvider>{children}</TRPCReactProvider>
+
+        <Footer />
       </body>
     </html>
   );
