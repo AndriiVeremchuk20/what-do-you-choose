@@ -23,9 +23,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body
-        className={`${googleGEO.className} bg-black text-2xl text-white`}
-      >
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
+      <body className={`${googleGEO.className} bg-black text-2xl text-white`}>
         <TRPCReactProvider>{children}</TRPCReactProvider>
 
         <Footer />
