@@ -10,7 +10,7 @@ const continueStory = async (storyText: string, messages: Message[]) => {
     messages: [
       {
         role: "developer",
-        content: `Continue story (30 - 50 words) (${storyText}) and propose user 2 ways to answer.`,
+        content: `Continue story (30 - 50 words) (${storyText}) and propose user 2 ways to answer. language (ukr)`,
       },
       ...messages,
     ],

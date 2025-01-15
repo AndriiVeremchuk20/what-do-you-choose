@@ -7,7 +7,7 @@ import { type History } from "~/config/histories";
 
 export const HistoriesList = ({ arr }: { arr: History[] }) => {
   return (
-    <motion.div className="grid w-full grid-cols-5 gap-5">
+    <motion.div className="grid w-full gap-5 grid-cols-1 lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 ">
       {arr.map((data) => (
         <HistoryCard data={data} key={data.id} />
       ))}
@@ -23,11 +23,17 @@ export const HistoryCard = ({ data }: { data: History }) => {
   return (
     <motion.div
       whileHover={{ scale: 1.1 }}
-      className="border-2 p-4 duration-300 hover:bg-neutral-800"
+      className="flex cursor-pointer flex-col items-center border-2 p-4 duration-300 hover:bg-neutral-800"
       onClick={() => router.push(`/history/${id}`)}
     >
-      <Image alt={`${name}-image`} width={400} height={400} src={image} />
-      <div className="text-center text-lg">{name}</div>
+      <Image
+        alt={`${name}-image`}
+        width={400}
+        height={400}
+        src={image}
+        className="blur-[1px] duration-300 hover:blur-none"
+      />
+      <div className="text-center">{name}</div>
     </motion.div>
   );
 };

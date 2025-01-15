@@ -11,7 +11,7 @@ export default function Welcome() {
   };
 
   return (
-    <div className="flex w-[30%] flex-col items-center justify-center space-y-5 rounded-xl border-2 px-3 py-10 text-4xl">
+		<div className="flex flex-col items-center justify-center space-y-5 w-full lg:w-2/6 md:w-3/4 sm:w-full px-10 py-10 text-4xl">
       <h1 className="text-5xl">Welcome</h1>
       <Button onClick={handleStartClick}>Start</Button>
     </div>

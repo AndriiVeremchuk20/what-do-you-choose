@@ -7,6 +7,7 @@ import { api } from "~/trpc/react";
 import { useStory } from "~/app/_hooks/useStory";
 import { type Message } from "~/services/openai/schema";
 import { Loader } from "~/app/_components/lib/loader";
+import { motion } from "framer-motion";
 
 export default function HistoryPage() {
   const story = useStory();
@@ -61,35 +62,46 @@ export default function HistoryPage() {
         </Box>
       </main>
     );
+  else if (nextStoryQuery.isPending)
+    return (
+      <main className="flex h-screen items-center justify-center">
+        <Loader />
+      </main>
+    );
 
   return (
-    <main className="flex h-screen items-center justify-center bg-black text-white">
-    <div className="w-3/4">  
-	<Box className="flex flex-col space-y-5">
-        {nextStoryQuery.isPending ? (
-          <Loader />
-        ) : (
-          <>
+    <main className="h-screen py-[40px]">
+      <Box className="flex items-center justify-center space-y-5">
+        <div className="grid h-full grid-rows-2 w-full lg:w-3/4 md:w-3/4 sm:w-full ">
+          <div className="flex items-center">
             <TypeAnimation
-              className="self-start text-left"
+              className="self-center text-left"
               sequence={[nextStoryQuery.data?.story ?? "red potato"]}
               speed={30}
-              repeat={2}
+              repeat={1}
             />
+          </div>
 
-            {typed && (
-              <div className="bottom-1 flex justify-center space-x-5">
-                {nextStoryQuery.data?.options.map((o, i) => (
-                  <Button key={i} onClick={() => handleOptionClick(o)}>
-                    {o}
-                  </Button>
-                ))}
-              </div>
-            )}
-          </>
-        )}
+          {typed && (
+            <motion.div className="w-full h-full flex flex-col lg:flex-row sm:flex-col items-start justify-center gap-10">
+              {nextStoryQuery.data?.options.map((o, i) => (
+                <motion.div
+                  initial={{ opacity: 0, y: 400 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    delay: i * 0.3,
+                    duration: 1,
+                  }}
+                  key={i}
+                  className="w-full"
+                >
+                  <Button onClick={() => handleOptionClick(o)}>{o}</Button>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </div>
       </Box>
-	  </div>
     </main>
   );
 }
