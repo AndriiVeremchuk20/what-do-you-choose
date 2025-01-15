@@ -1,12 +1,12 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
-import { Button, Box } from "~/app/_components/lib";
+import { Button, Box } from "~/components/lib";
 import { TypeAnimation } from "react-type-animation";
 import { api } from "~/trpc/react";
-import { useStory } from "~/app/_hooks/useStory";
+import { useStory } from "~/hooks/useStory";
 import { type Message } from "~/services/openai/schema";
-import { Loader } from "~/app/_components/lib/loader";
+import { Loader } from "~/components/lib/loader";
 import { motion } from "framer-motion";
 
 export default function HistoryPage() {
@@ -72,7 +72,7 @@ export default function HistoryPage() {
   return (
     <main className="h-screen py-[40px]">
       <Box className="flex items-center justify-center space-y-5">
-        <div className="grid h-full grid-rows-2 w-full lg:w-3/4 md:w-3/4 sm:w-full ">
+        <div className="grid h-full w-full grid-rows-2 sm:w-full md:w-3/4 lg:w-3/4">
           <div className="flex items-center">
             <TypeAnimation
               className="self-center text-left"
@@ -83,7 +83,7 @@ export default function HistoryPage() {
           </div>
 
           {typed && (
-            <motion.div className="w-full h-full flex flex-col lg:flex-row sm:flex-col items-start justify-center gap-10">
+            <motion.div className="flex h-full w-full flex-col items-start justify-center gap-10 sm:flex-col lg:flex-row">
               {nextStoryQuery.data?.options.map((o, i) => (
                 <motion.div
                   initial={{ opacity: 0, y: 400 }}
