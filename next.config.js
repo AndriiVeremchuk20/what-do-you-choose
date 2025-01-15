@@ -6,6 +6,7 @@ import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
 const config = {
+  reactStrictMode: false,
   images: {
     minimumCacheTTL: 60,
     domains: [
@@ -16,6 +17,16 @@ const config = {
       "oaidalleapiprodscus.blob.core.windows.net",
     ],
     loader: "default",
+  },
+  webpack(config) {
+    /* eslint-disable */
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: [{ loader: "@svgr/webpack", options: { icon: true } }],
+    });
+
+    return config;
+    /* eslint-enable */
   },
 };
 

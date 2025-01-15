@@ -7,7 +7,7 @@ import { type History } from "~/config/histories";
 
 export const HistoriesList = ({ arr }: { arr: History[] }) => {
   return (
-    <motion.div className="grid w-full gap-5 grid-cols-1 lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 ">
+    <motion.div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5">
       {arr.map((data) => (
         <HistoryCard data={data} key={data.id} />
       ))}
