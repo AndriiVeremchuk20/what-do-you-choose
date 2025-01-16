@@ -1,10 +1,7 @@
-import {usePathname} from "next/navigation"
+import { usePathname } from "next/navigation";
 
 export const usePathnameInclude = (text: string): boolean => {
+  const pathname = usePathname();
 
-	const pathname = usePathname();
-
-	return pathname.includes(text);
-
-}
-
+  return pathname.includes(text);
+};
