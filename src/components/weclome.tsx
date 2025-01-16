@@ -12,7 +12,7 @@ export default function Welcome() {
   };
 
   return (
-    <div className="flex w-full flex-col items-center justify-center space-y-5 px-10 py-10 text-4xl sm:w-full md:w-3/4 lg:w-3/6">
+    <div className="flex w-full flex-col items-center justify-center space-y-5 px-5 py-10 text-4xl lg:w-3/6 sm:w-full ">
       <TypeAnimation
         sequence={[
           "Welcome to the game 🎮",
@@ -29,7 +29,7 @@ export default function Welcome() {
         speed={20}
         wrapper="span"
         repeat={Infinity}
-		className="text-5xl"
+		className="text-5xl lg:text-5xl sm:text-3xl"
       />
       <Button onClick={handleStartClick}>Start</Button>
     </div>
