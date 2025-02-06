@@ -17,11 +17,11 @@ export default function Welcome() {
         sequence={[
           "Welcome to the game 🎮",
           1000,
-          "Create your own history 📖",
+          "Create own history 📖",
           1000,
           "Make decisions 🤔",
           1000,
-          "Pump up your imagination 💭",
+          "Unleash creativity 💭",
           1000,
           "Click Start 🖱️🚀",
           1000,
@@ -29,7 +29,7 @@ export default function Welcome() {
         speed={20}
         wrapper="span"
         repeat={Infinity}
-        className="text-5xl sm:text-3xl lg:text-5xl"
+        className="text-2xl sm:text-2xl lg:text-5xl"
       />
       <Button onClick={handleStartClick}>Start</Button>
     </div>
