@@ -5,11 +5,17 @@ import { usePathnameInclude } from "~/hooks/usePathInclude";
 import { CoffeeIcon, InfoIcon, LogoIcon } from "./svgs";
 import { twMerge } from "tailwind-merge";
 import Link from "next/link";
+import { useAppStore } from "~/storage/app";
 
 const BuyMeCoffeeLink = "https://buymeacoffee.com/andriiveremchuk";
 
 export default function Footer() {
+  const { setShowInfoModal } = useAppStore();
   const isHomePage = !usePathnameInclude("/h");
+
+  const handleInfoClick = () => {
+    setShowInfoModal(true);
+  };
 
   return (
     <footer
@@ -21,16 +27,18 @@ export default function Footer() {
       <Link href={"/"} className="cursor-pointer">
         <LogoIcon className="text-6xl" />
       </Link>
+      {/*<div className="text-sm">© Monkey Dev Lab</div> */}
       <div className="flex space-x-5">
         <motion.div
           whileHover={{
             rotate: [0, 5, -5, 5, 0 - 5, 0],
             transition: { duration: 0.5 },
           }}
+          onClick={handleInfoClick}
         >
-          <div>
+          <Link href={"/info"}>
             <InfoIcon className="text-6xl" />
-          </div>
+          </Link>
         </motion.div>
         <motion.div
           whileHover={{
@@ -38,8 +46,10 @@ export default function Footer() {
             transition: { duration: 0.5 },
           }}
         >
-          <Link href={BuyMeCoffeeLink}>
-            <CoffeeIcon className="text-6xl" />
+          <Link href={BuyMeCoffeeLink} passHref legacyBehavior>
+            <a target="_blank">
+              <CoffeeIcon className="text-6xl" />
+            </a>
           </Link>
         </motion.div>
       </div>
