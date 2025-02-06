@@ -33,7 +33,10 @@ const InfoBodyItem = () => {
 const InfoBody = () => {
   return (
     <div className="grid h-full w-full gap-4 sm:grid-cols-1 sm:grid-rows-4 lg:grid-cols-2 lg:grid-rows-2">
-      <div className="flex flex-col items-center justify-between">
+	
+	This page currently in dev
+
+	{/*<div className="flex flex-col items-center justify-between">
         <div>🚀 Click start</div>
         <div></div>
         <div>Step: 1</div>
@@ -52,7 +55,7 @@ const InfoBody = () => {
         <div>🎉 Enjoy</div>
         <div></div>
         <div>Step: 4</div>
-      </div>{" "}
+      </div>{" "*/}
     </div>
   );
 };
