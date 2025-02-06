@@ -1,7 +1,9 @@
-"use client"
+"use client";
 
-export default function Loading(){
-	return <main className="h-screen w-full z-10 bg-black/50 flex justify-center items-center">
-			Loading...
-	</main>
+export default function Loading() {
+  return (
+    <main className="z-10 flex h-screen w-full items-center justify-center bg-black/50">
+      Loading...
+    </main>
+  );
 }
