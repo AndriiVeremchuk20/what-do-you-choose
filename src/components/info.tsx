@@ -21,48 +21,26 @@ const InfoHeader = () => {
   );
 };
 
-const InfoBodyItem = () => {
-  return (
-    <div>
-      <div></div>
-      <div></div>
-    </div>
-  );
-};
-
 const InfoBody = () => {
   return (
-    <div className="grid h-full w-full gap-4 sm:grid-cols-1 sm:grid-rows-4 lg:grid-cols-2 lg:grid-rows-2">
-	
-	This page currently in dev
-
-	{/*<div className="flex flex-col items-center justify-between">
-        <div>🚀 Click start</div>
-        <div></div>
-        <div>Step: 1</div>
-      </div>
-      <div className="">
-        <div>📚 Choose a story template</div>
-        <div></div>
-        <div>Step: 2</div>
-      </div>
-      <div className="">
-        <div>📝 Make choices to generate a story</div>
-        <div></div>
-        <div>Step: 3</div>
-      </div>
-      <div className="">
-        <div>🎉 Enjoy</div>
-        <div></div>
-        <div>Step: 4</div>
-      </div>{" "*/}
+    <div className="flex flex-col justify-between space-y-3 py-3 p-3">
+      <p>
+        🎉 Welcome to the &quotWhat Do You Choose&quot game, where you can create your
+        own unique story! 📖✨
+      </p>
+      <p>🌿 Here, you can relax and dive into a story that never ends. 🔄📜</p>
+      <p>
+        💡 If you have any questions or proposals, you can always write to ✉️
+        monkey.dev.lab@gmail.com.
+      </p>
+      <p>🚀 We hope you enjoy our projects! 🎮❤️</p>
     </div>
   );
 };
 
 const Info = () => {
   return (
-    <div className="flex flex-col rounded-xl bg-black p-4 sm:h-full sm:w-full lg:h-4/5 lg:w-3/4">
+    <div className="flex flex-col rounded-xl h-full w-full bg-black p-2 sm:h-screen sm:w-full lg:h-4/5 lg:w-3/4">
       <InfoHeader />
       <InfoBody />
     </div>

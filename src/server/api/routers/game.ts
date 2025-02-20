@@ -1,9 +1,10 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { continueStory, generateImage } from "~/services/openai";
 import { messageSchema } from "~/services/openai/schema";
 
-export const openAIRouter = createTRPCRouter({
+export const gameRouter = createTRPCRouter({
   generateText: publicProcedure
     .input(
       z.object({ storyText: z.string(), messages: z.array(messageSchema) }),
@@ -11,9 +12,21 @@ export const openAIRouter = createTRPCRouter({
     .query(async ({ input }) => {
       const { storyText, messages } = input;
 
-      const nextPartStory = await continueStory(storyText, messages);
-
-      return nextPartStory;
+      try {
+        const nextPartStory = await continueStory(storyText, messages);
+        if (!nextPartStory)
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "INTERNAL_SERVER_ERROR",
+          });
+        return nextPartStory;
+      } catch (error) {
+        console.log("[ !!! ] Error", error);
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Server Error",
+        });
+      }
     }),
 
   generateImage: publicProcedure

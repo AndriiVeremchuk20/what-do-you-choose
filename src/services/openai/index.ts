@@ -32,7 +32,7 @@ const continueStory = async (storyText: string, messages: Message[]) => {
               items: { type: "string" },
             },
           },
-          required: ["story", "options"], // Ensure these fields are always present
+          required: ["story", "options"],
         },
       },
     },

@@ -16,7 +16,7 @@ const Game = () => {
   const [typed, setTyped] = useState<boolean>(false);
   const [storySteps, setStorySteps] = useState<Message[]>([]);
 
-  const nextStoryQuery = api.openai.generateText.useQuery(
+  const nextStoryQuery = api.game.generateText.useQuery(
     { storyText: story?.description ?? "ping", messages: storySteps },
     {
       enabled: isStarted,
