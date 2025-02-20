@@ -25,7 +25,7 @@ const InfoBody = () => {
   return (
     <div className="flex flex-col justify-between space-y-3 py-3 p-3">
       <p>
-        🎉 Welcome to the "What Do You Choose" game, where you can create your
+        🎉 Welcome to the &quotWhat Do You Choose&quot game, where you can create your
         own unique story! 📖✨
       </p>
       <p>🌿 Here, you can relax and dive into a story that never ends. 🔄📜</p>
