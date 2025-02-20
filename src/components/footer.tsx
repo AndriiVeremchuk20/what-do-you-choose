@@ -5,17 +5,11 @@ import { usePathnameInclude } from "~/hooks/usePathInclude";
 import { CoffeeIcon, InfoIcon, LogoIcon } from "./svgs";
 import { twMerge } from "tailwind-merge";
 import Link from "next/link";
-import { useAppStore } from "~/storage/app";
 
 const BuyMeCoffeeLink = "https://buymeacoffee.com/andriiveremchuk";
 
 export default function Footer() {
-  const { setShowInfoModal } = useAppStore();
   const isHomePage = !usePathnameInclude("/h");
-
-  const handleInfoClick = () => {
-    setShowInfoModal(true);
-  };
 
   return (
     <footer
@@ -34,7 +28,6 @@ export default function Footer() {
             rotate: [0, 5, -5, 5, 0 - 5, 0],
             transition: { duration: 0.5 },
           }}
-          onClick={handleInfoClick}
         >
           <Link href={"/info"}>
             <InfoIcon className="text-6xl" />
