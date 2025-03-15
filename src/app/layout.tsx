@@ -6,6 +6,7 @@ import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import Footer from "~/components/footer";
+import Sound from "~/components/sound";
 
 export const metadata: Metadata = {
   title: "What do you choose?",
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body className={`${googleGEO.className} bg-black text-2xl text-white`}>
         <TRPCReactProvider>{children}</TRPCReactProvider>
         <Footer />
+		<Sound/>
       </body>
     </html>
   );

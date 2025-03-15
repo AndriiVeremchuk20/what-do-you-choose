@@ -1,11 +1,11 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import Histories from "~/config/histories";
+import Stories from "~/config/stories";
 
 export const useStory = () => {
   const { id } = useParams();
-  const history = Histories.find((h) => h.id + "" === id);
+  const history = Stories.find((h) => h.id + "" === id);
 
   return history ?? null;
 };
