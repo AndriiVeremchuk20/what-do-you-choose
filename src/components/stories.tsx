@@ -31,6 +31,8 @@ export const StoryCard = ({ data }: { data: Story }) => {
         width={400}
         height={400}
         src={image}
+        priority={false}
+        loading="lazy"
         className="blur-[1px] duration-300 hover:blur-none"
       />
       <div className="text-center">{name}</div>

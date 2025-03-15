@@ -1,15 +1,13 @@
-"use client"
+"use client";
 
 import Game from "~/components/game";
-import {StoryNotFound} from "~/components/story-not-found";
-import {useStory} from "~/hooks/useStory";
+import { StoryNotFound } from "~/components/story-not-found";
+import { useStory } from "~/hooks/useStory";
 
 export default function HistoryPage() {
-  
-	const story = useStory();
+  const story = useStory();
 
-	if(!story)
-		return <StoryNotFound/> 
+  if (!story) return <StoryNotFound />;
 
-	return <Game storyTemplate={story}/>
+  return <Game storyTemplate={story} />;
 }
