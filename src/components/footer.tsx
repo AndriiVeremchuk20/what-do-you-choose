@@ -2,21 +2,27 @@
 
 import { motion } from "framer-motion";
 import { usePathnameInclude } from "~/hooks/usePathInclude";
-import { CoffeeIcon, InfoIcon, LogoIcon, MusicOffIcon, MusicOnIcon } from "./svgs";
+import {
+  CoffeeIcon,
+  InfoIcon,
+  LogoIcon,
+  MusicOffIcon,
+  MusicOnIcon,
+} from "./svgs";
 import { twMerge } from "tailwind-merge";
 import Link from "next/link";
-import {useAppStore} from "~/store";
+import { useAppStore } from "~/store";
 
 const BuyMeCoffeeLink = "https://buymeacoffee.com/andriiveremchuk";
 
 export default function Footer() {
   const isHomePage = !usePathnameInclude("/s");
 
-  const {playMusic} = useAppStore();
+  const { playMusic } = useAppStore();
 
   const handleSoundClick = () => {
-	 useAppStore.setState(prev=>({playMusic: !prev.playMusic}))
-  }
+    useAppStore.setState((prev) => ({ playMusic: !prev.playMusic }));
+  };
 
   return (
     <>
@@ -31,7 +37,11 @@ export default function Footer() {
         </Link>
         <div className="flex space-x-5">
           <motion.button onClick={handleSoundClick}>
-		   {playMusic? <MusicOffIcon className="text-6xl"/>: <MusicOnIcon className="text-6xl" />}
+            {playMusic ? (
+              <MusicOffIcon className="text-6xl" />
+            ) : (
+              <MusicOnIcon className="text-6xl" />
+            )}
           </motion.button>
 
           <motion.div

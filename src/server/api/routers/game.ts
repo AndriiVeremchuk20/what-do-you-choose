@@ -13,28 +13,26 @@ export const gameRouter = createTRPCRouter({
       const { storyText, messages } = input;
 
       try {
+        // generate next part of story
         const nextPartStory = await continueStory(storyText, messages);
-        if (!nextPartStory)
-          throw new TRPCError({
-            code: "INTERNAL_SERVER_ERROR",
-            message: "INTERNAL_SERVER_ERROR",
-          });
+
         return nextPartStory;
       } catch (error) {
         console.log("[ !!! ] Error", error);
+
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
-          message: "Server Error",
+          message: "INTERNAL_SERVER_ERROR",
         });
       }
     }),
 
   generateImage: publicProcedure
     .input(z.object({ description: z.string() }))
-    .mutation(async ({ }) => {
+    .mutation(async ({}) => {
       //const { description } = input;
 
       //const imageUrl = await generateImage(description);
-      return  "hello"//imageUrl;
+      return "hello"; //imageUrl;
     }),
 });

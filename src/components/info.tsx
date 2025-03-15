@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Button } from "./lib";
 import { BackArrowIcon } from "./svgs";
+import Image from "next/image";
 
 const InfoHeader = () => {
   const router = useRouter();
@@ -23,7 +24,14 @@ const InfoHeader = () => {
 
 const InfoBody = () => {
   return (
-    <div className="flex flex-col justify-between space-y-3 p-3 py-3">
+    <div className="flex flex-col justify-between space-y-3 p-3 py-3 text-3xl">
+      <Image
+        src="/logo.svg"
+        alt="logo"
+        width={200}
+        height={200}
+        className="self-center"
+      />
       <p>
         🎉 Welcome to the &quotWhat Do You Choose&quot game, where you can
         create your own unique story! 📖✨

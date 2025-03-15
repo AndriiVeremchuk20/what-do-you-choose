@@ -7,27 +7,28 @@ import { api } from "~/trpc/react";
 import { type Message } from "~/services/openai/schema";
 import { Loader } from "~/components/lib/loader";
 import { motion } from "framer-motion";
-import {type Story} from "~/config/stories";
+import { type Story } from "~/config/stories";
 
-const Game = ({storyTemplate}:{storyTemplate: Story}) => {
-
+const Game = ({ storyTemplate }: { storyTemplate: Story }) => {
   const [isStarted, setIsStarted] = useState<boolean>(false);
   const [typed, setTyped] = useState<boolean>(false);
   const [storySteps, setStorySteps] = useState<Message[]>([]);
 
   const nextStoryQuery = api.game.generateText.useQuery(
-    { storyText: storyTemplate.description ?? "ping", messages: storySteps },
+    { storyText: storyTemplate.description, messages: storySteps },
     {
       enabled: isStarted,
     },
   );
 
   const handleOptionClick = (option: string) => {
+    if (!nextStoryQuery.data) return;
+
     setStorySteps((prev) => [
       ...prev,
       {
-        role: "assistant",
-        content: nextStoryQuery.data?.story ?? "improvisate",
+        role: "developer",
+        content: nextStoryQuery.data.story,
       },
       { role: "user", content: option },
     ]);
@@ -48,7 +49,11 @@ const Game = ({storyTemplate}:{storyTemplate: Story}) => {
           />
           <TypeAnimation
             className="my-5"
-            sequence={[storyTemplate.description, 3000, () => handleAnimationEnd()]}
+            sequence={[
+              storyTemplate.description,
+              3000,
+              () => handleAnimationEnd(),
+            ]}
             speed={25}
             repeat={1}
           />
@@ -75,7 +80,7 @@ const Game = ({storyTemplate}:{storyTemplate: Story}) => {
           <div className="flex items-center">
             <TypeAnimation
               className="self-center text-left"
-              sequence={[nextStoryQuery.data?.story ?? "red potato"]}
+              sequence={[nextStoryQuery.data?.story ?? "something happend"]}
               speed={30}
               repeat={1}
             />

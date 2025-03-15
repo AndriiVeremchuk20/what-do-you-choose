@@ -9,7 +9,7 @@ export const env = createEnv({
   server: {
     NODE_ENV: z.enum(["development", "test", "production"]),
     OPEN_AI_API_KEY: z.string(),
-	GROQ_AI_API_KEY: z.string(),
+    GROQ_AI_API_KEY: z.string(),
   },
 
   /**
@@ -28,7 +28,7 @@ export const env = createEnv({
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
     OPEN_AI_API_KEY: process.env.OPEN_AI_API_KEY,
-	GROQ_AI_API_KEY: process.env.GROQ_AI_API_KEY,
+    GROQ_AI_API_KEY: process.env.GROQ_AI_API_KEY,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**
