@@ -8,7 +8,7 @@ export default function Welcome() {
   const router = useRouter();
 
   const handleStartClick = () => {
-    return router.push("/histories");
+    return router.push("/stories");
   };
 
   return (

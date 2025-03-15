@@ -4,20 +4,19 @@ import { useState } from "react";
 import { Button, Box } from "~/components/lib";
 import { TypeAnimation } from "react-type-animation";
 import { api } from "~/trpc/react";
-import { useStory } from "~/hooks/useStory";
 import { type Message } from "~/services/openai/schema";
 import { Loader } from "~/components/lib/loader";
 import { motion } from "framer-motion";
+import {type Story} from "~/config/stories";
 
-const Game = () => {
-  const story = useStory();
+const Game = ({storyTemplate}:{storyTemplate: Story}) => {
 
   const [isStarted, setIsStarted] = useState<boolean>(false);
   const [typed, setTyped] = useState<boolean>(false);
   const [storySteps, setStorySteps] = useState<Message[]>([]);
 
   const nextStoryQuery = api.game.generateText.useQuery(
-    { storyText: story?.description ?? "ping", messages: storySteps },
+    { storyText: storyTemplate.description ?? "ping", messages: storySteps },
     {
       enabled: isStarted,
     },
@@ -41,15 +40,15 @@ const Game = () => {
       <main className="flex h-screen p-10">
         <Box className="flex flex-col justify-center">
           <Image
-            src={story!.image}
+            src={storyTemplate.image}
             width={400}
             height={400}
-            alt={story!.name}
+            alt={storyTemplate.name}
             className="self-center"
           />
           <TypeAnimation
             className="my-5"
-            sequence={[story!.description, 3000, () => handleAnimationEnd()]}
+            sequence={[storyTemplate.description, 3000, () => handleAnimationEnd()]}
             speed={25}
             repeat={1}
           />

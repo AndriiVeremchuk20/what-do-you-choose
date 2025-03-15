@@ -23,10 +23,10 @@ const InfoHeader = () => {
 
 const InfoBody = () => {
   return (
-    <div className="flex flex-col justify-between space-y-3 py-3 p-3">
+    <div className="flex flex-col justify-between space-y-3 p-3 py-3">
       <p>
-        🎉 Welcome to the &quotWhat Do You Choose&quot game, where you can create your
-        own unique story! 📖✨
+        🎉 Welcome to the &quotWhat Do You Choose&quot game, where you can
+        create your own unique story! 📖✨
       </p>
       <p>🌿 Here, you can relax and dive into a story that never ends. 🔄📜</p>
       <p>
@@ -40,7 +40,7 @@ const InfoBody = () => {
 
 const Info = () => {
   return (
-    <div className="flex flex-col rounded-xl h-full w-full bg-black p-2 sm:h-screen sm:w-full lg:h-4/5 lg:w-3/4">
+    <div className="flex h-full w-full flex-col rounded-xl bg-black p-2 sm:h-screen sm:w-full lg:h-4/5 lg:w-3/4">
       <InfoHeader />
       <InfoBody />
     </div>

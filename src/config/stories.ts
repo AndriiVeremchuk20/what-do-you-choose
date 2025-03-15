@@ -1,11 +1,11 @@
-export type History = {
+export type Story = {
   id: number;
   name: string;
   description: string;
   image: string;
 };
 
-const Histories: History[] = [
+const StoriesConfig: Story[] = [
   {
     id: 0,
     name: "Island",
@@ -88,4 +88,4 @@ const Histories: History[] = [
   },
 ];
 
-export default Histories;
+export default StoriesConfig;

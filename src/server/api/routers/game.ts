@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { continueStory, generateImage } from "~/services/openai";
+import { continueStory } from "~/services/openai";
 import { messageSchema } from "~/services/openai/schema";
 
 export const gameRouter = createTRPCRouter({
@@ -31,10 +31,10 @@ export const gameRouter = createTRPCRouter({
 
   generateImage: publicProcedure
     .input(z.object({ description: z.string() }))
-    .mutation(async ({ input }) => {
-      const { description } = input;
+    .mutation(async ({ }) => {
+      //const { description } = input;
 
-      const imageUrl = await generateImage(description);
-      return imageUrl;
+      //const imageUrl = await generateImage(description);
+      return  "hello"//imageUrl;
     }),
 });
