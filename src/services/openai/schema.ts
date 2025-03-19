@@ -20,7 +20,7 @@ export const parseStory = (rawText: string): Story => {
 };
 
 export const messageSchema = z.object({
-  role: z.enum(["developer", "assistant", "user"]),
+  role: z.enum(["system", "assistant", "user"]),
   content: z.string(),
 });
 
