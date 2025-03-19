@@ -13,7 +13,7 @@ export const StoryNotFound = () => {
 
       <Link href="/stories">
         <TypeAnimation
-          sequence={["PAGE NOT FOUND..."]}
+          sequence={["BACK TO ALL STORIES..."]}
           cursor={false}
           className="text-4xl"
           speed={10}

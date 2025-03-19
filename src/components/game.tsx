@@ -8,6 +8,7 @@ import { type Message } from "~/services/openai/schema";
 import { Loader } from "~/components/lib/loader";
 import { motion } from "framer-motion";
 import { type Story } from "~/config/stories";
+import Link from "next/link";
 
 const Game = ({ storyTemplate }: { storyTemplate: Story }) => {
   const [isStarted, setIsStarted] = useState<boolean>(false);
@@ -27,7 +28,7 @@ const Game = ({ storyTemplate }: { storyTemplate: Story }) => {
     setStorySteps((prev) => [
       ...prev,
       {
-		role: "system",
+        role: "system",
         content: nextStoryQuery.data.story,
       },
       { role: "user", content: option },
@@ -71,6 +72,18 @@ const Game = ({ storyTemplate }: { storyTemplate: Story }) => {
       <main className="flex h-screen items-center justify-center">
         <Loader />
       </main>
+    );
+  else if (nextStoryQuery.isError)
+    return (
+      <div className="flex h-screen flex-col items-center justify-center">
+        <div>Oops... Something happened. Try again.</div>
+        <Link
+          href="/stories"
+          className="cursor-pointer underline duration-300 hover:scale-95"
+        >
+          Back to all stories
+        </Link>
+      </div>
     );
 
   return (
