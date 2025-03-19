@@ -27,7 +27,7 @@ const Game = ({ storyTemplate }: { storyTemplate: Story }) => {
     setStorySteps((prev) => [
       ...prev,
       {
-        role: "developer",
+		role: "system",
         content: nextStoryQuery.data.story,
       },
       { role: "user", content: option },

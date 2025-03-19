@@ -8,9 +8,13 @@ const continueStory = async (storyText: string, messages: Message[]) => {
   const response = await OpenAIClient.chat.completions.create({
     model: "gpt-4o-2024-08-06",
     messages: [
-      {
-        role: "developer",
-        content: `Continue story (30 - 50 words) (${storyText}) and propose user 2 ways to answer. language (ukr)`,
+		{
+			role: "system",
+			content: "You're a generator of interesting stories"
+		},
+		{
+        role: "user",
+        content: `Continue story (30 - 50 words) (${storyText}) and propose user 2 ways to answer. language (ukr), use emoji`,
       },
       ...messages,
     ],
