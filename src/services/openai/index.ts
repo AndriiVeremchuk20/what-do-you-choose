@@ -35,8 +35,13 @@ const continueStory = async (storyText: string, messages: Message[]) => {
                 "List of options (2) for the user to choose, shortly with emoji",
               items: { type: "string" },
             },
+			isEnd: {
+				type: "boolean",
+				description: "Boolean value that shows is end of story or not",
+				items: {type: "boolean"}
+			}
           },
-          required: ["story", "options"],
+          required: ["story", "options", "isEnd"],
         },
       },
     },
@@ -54,8 +59,8 @@ const continueStory = async (storyText: string, messages: Message[]) => {
 
 const generateImage = async (description: string) => {
   const response = await OpenAIClient.images.generate({
-    model: "dall-e-2",
-    prompt: `${description}`,
+ model: "dall-e-2",
+    prompt: `generate pixel art image (white and black) for ${description}`,
     n: 1,
     size: "1024x1024",
   });

@@ -17,9 +17,9 @@ const Game = ({ storyTemplate }: { storyTemplate: Story }) => {
 
   const nextStoryQuery = api.game.generateText.useQuery(
     { storyText: storyTemplate.description, messages: storySteps },
-    {
+    {	
       enabled: isStarted,
-    },
+	}
   );
 
   const handleOptionClick = (option: string) => {
@@ -28,7 +28,7 @@ const Game = ({ storyTemplate }: { storyTemplate: Story }) => {
     setStorySteps((prev) => [
       ...prev,
       {
-        role: "system",
+        role: "assistant",
         content: nextStoryQuery.data.story,
       },
       { role: "user", content: option },
@@ -86,6 +86,9 @@ const Game = ({ storyTemplate }: { storyTemplate: Story }) => {
       </div>
     );
 
+	else if(nextStoryQuery.data.isEnd)
+		return <div>End of story</div>
+
   return (
     <main className="h-screen py-[40px]">
       <Box className="flex items-center justify-center space-y-5">
@@ -112,7 +115,7 @@ const Game = ({ storyTemplate }: { storyTemplate: Story }) => {
                   key={i}
                   className="w-full"
                 >
-                  <Button onClick={() => handleOptionClick(o)}>{o}</Button>
+                  <Button type="button" onClick={() => handleOptionClick(o)}>{o}</Button>
                 </motion.div>
               ))}
             </motion.div>

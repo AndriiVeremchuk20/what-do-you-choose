@@ -28,7 +28,7 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body className={`${googleGEO.className} bg-black text-2xl text-white`}>
+      <body className={`${googleGEO.className} bg-gray-900 text-2xl text-white`}>
         <TRPCReactProvider>{children}</TRPCReactProvider>
         <Footer />
         <Sound />
