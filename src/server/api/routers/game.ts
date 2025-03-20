@@ -11,9 +11,8 @@ export const gameRouter = createTRPCRouter({
     )
     .query(async ({ input }) => {
       const { storyText, messages } = input;
-
-      try {
-        // generate next part of story
+   
+	  try {
         const nextPartStory = await continueStory(storyText, messages);
 
         return nextPartStory;

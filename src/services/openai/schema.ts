@@ -3,6 +3,7 @@ import { z } from "zod";
 export const responseStorySchema = z.object({
   story: z.string(),
   options: z.array(z.string()),
+  isEnd: z.boolean(),
 });
 
 export type Story = z.infer<typeof responseStorySchema>;
