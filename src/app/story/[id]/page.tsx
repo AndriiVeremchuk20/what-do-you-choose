@@ -1,6 +1,6 @@
 "use client";
 
-import Game from "~/components/game";
+import { Game } from "~/components/game";
 import { StoryNotFound } from "~/components/story-not-found";
 import { useStory } from "~/hooks/useStory";
 

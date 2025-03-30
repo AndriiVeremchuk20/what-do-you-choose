@@ -8,34 +8,39 @@ import { type Message } from "~/services/openai/schema";
 import { Loader } from "~/components/lib/loader";
 import { motion } from "framer-motion";
 import { type Story } from "~/config/stories";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-const Game = ({ storyTemplate }: { storyTemplate: Story }) => {
+export const Game = ({ storyTemplate }: { storyTemplate: Story }) => {
+  const router = useRouter();
   const [isStarted, setIsStarted] = useState<boolean>(false);
   const [typed, setTyped] = useState<boolean>(false);
   const [storySteps, setStorySteps] = useState<Message[]>([]);
 
-  const nextStoryQuery = api.game.generateText.useQuery(
-    { storyText: storyTemplate.description, messages: storySteps },
-    {	
-      enabled: isStarted,
-	}
-  );
+  const nextStoryMutation = api.game.generateText.useMutation({});
 
-  const handleOptionClick = (option: string) => {
-    if (!nextStoryQuery.data) return;
-
+  const handleOptionClick = (value: string) => {
     setStorySteps((prev) => [
       ...prev,
-      {
-        role: "assistant",
-        content: nextStoryQuery.data.story,
-      },
-      { role: "user", content: option },
+      { role: "assistant", content: nextStoryMutation.data!.story },
+      { role: "user", content: value },
     ]);
+
+    nextStoryMutation.mutate({
+      storyText: storyTemplate.description,
+      messages: storySteps.slice(-5),
+    });
   };
 
   const handleAnimationEnd = () => setTyped(true);
+
+  const handleStartClick = () => {
+    setIsStarted(true);
+
+    nextStoryMutation.mutate({
+      storyText: storyTemplate.description,
+      messages: storySteps,
+    });
+  };
 
   if (!isStarted)
     return (
@@ -58,37 +63,18 @@ const Game = ({ storyTemplate }: { storyTemplate: Story }) => {
             speed={25}
             repeat={1}
           />
-          <Button
-            className="w-fit self-center"
-            onClick={() => setIsStarted(true)}
-          >
+          <Button className="w-fit self-center" onClick={handleStartClick}>
             Continue
           </Button>
         </Box>
       </main>
     );
-  else if (nextStoryQuery.isPending)
+  else if (nextStoryMutation.isPending)
     return (
-      <main className="flex h-screen items-center justify-center">
+      <main className="felx h-screen items-center justify-center">
         <Loader />
       </main>
     );
-  else if (nextStoryQuery.isError)
-    return (
-      <div className="flex h-screen flex-col items-center justify-center">
-        <div>Oops... Something happened. Try again.</div>
-        <Link
-          href="/stories"
-          className="cursor-pointer underline duration-300 hover:scale-95"
-        >
-          Back to all stories
-        </Link>
-      </div>
-    );
-
-	else if(nextStoryQuery.data.isEnd)
-		return <div>End of story</div>
-
   return (
     <main className="h-screen py-[40px]">
       <Box className="flex items-center justify-center space-y-5">
@@ -96,7 +82,7 @@ const Game = ({ storyTemplate }: { storyTemplate: Story }) => {
           <div className="flex items-center">
             <TypeAnimation
               className="self-center text-left"
-              sequence={[nextStoryQuery.data?.story ?? "something happend"]}
+              sequence={[nextStoryMutation.data?.story ?? "something happend"]}
               speed={30}
               repeat={1}
             />
@@ -104,7 +90,7 @@ const Game = ({ storyTemplate }: { storyTemplate: Story }) => {
 
           {typed && (
             <motion.div className="flex h-full w-full flex-col items-start justify-center gap-10 sm:flex-col lg:flex-row">
-              {nextStoryQuery.data?.options.map((o, i) => (
+              {nextStoryMutation.data?.options.map((o, i) => (
                 <motion.div
                   initial={{ opacity: 0, y: 400 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -115,7 +101,9 @@ const Game = ({ storyTemplate }: { storyTemplate: Story }) => {
                   key={i}
                   className="w-full"
                 >
-                  <Button type="button" onClick={() => handleOptionClick(o)}>{o}</Button>
+                  <Button type="button" onClick={() => handleOptionClick(o)}>
+                    {o}
+                  </Button>
                 </motion.div>
               ))}
             </motion.div>
@@ -125,5 +113,3 @@ const Game = ({ storyTemplate }: { storyTemplate: Story }) => {
     </main>
   );
 };
-
-export default Game;
