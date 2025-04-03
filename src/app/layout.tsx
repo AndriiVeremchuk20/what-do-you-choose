@@ -9,7 +9,8 @@ import Footer from "~/components/footer";
 import Sound from "~/components/sound";
 import { HydrateClient } from "~/trpc/server";
 
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/react";
+import { AuthProvider } from "~/components/provider/auth";
 
 export const metadata: Metadata = {
   title: "What do you choose?",
@@ -35,14 +36,16 @@ export default function RootLayout({
         className={`${googleGEO.className} bg-gray-900 text-2xl text-white`}
       >
         <TRPCReactProvider>
-          <HydrateClient>{children}</HydrateClient>
+          <HydrateClient>
+            <AuthProvider>{children}</AuthProvider>
+          </HydrateClient>
+
           <Footer />
           <Sound />
         </TRPCReactProvider>
-		
       </body>
 
-		<Analytics/>
+      <Analytics />
     </html>
   );
 }

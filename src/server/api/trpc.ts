@@ -6,10 +6,13 @@
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
-import { initTRPC } from "@trpc/server";
+import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 import redis from "../redis";
+import { env } from "~/env";
+import { decodeToken } from "../tools/token";
+import APP_CONFIG from "~/config/app";
 
 /**
  * 1. CONTEXT
@@ -23,6 +26,7 @@ import redis from "../redis";
  *
  * @see https://trpc.io/docs/server/context
  */
+
 export const createTRPCContext = async (opts: { headers: Headers }) => {
   return {
     ...opts,
@@ -95,11 +99,52 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
   return result;
 });
 
+const verifyUser = t.middleware(async ({ ctx, next }) => {
+  // parse token "Bearer ****token****" -> *****token*****
+  const token = (ctx.headers.get("authorization") as string).split(" ")[1];
+
+  if (!token) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+
+  // decode token -> {id:string}, the `user` non-nullable
+  const user = await decodeToken({ token, secret: env.JWT_SECRET });
+
+  if (!user) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+
+  // get num of user games and compare with limit 
+  const numGames = await ctx.redis.get(`user_count:${user.id}`);
+
+  if(!numGames){
+    await ctx.redis.set(`user_count:${user.id}`, 0);
+	return next ({ctx: {session: {user, games: 0} }});
+  }
+
+  const games = Number(numGames);
+  
+  if(games >= APP_CONFIG.GAME_LIMIT){
+	throw new TRPCError({code: "FORBIDDEN"})
+  }
+
+  return next({ ctx: { session: { user, games } } });
+});
+
 /**
  * Public (unauthenticated) procedure
  *
- * This is the base piece you use to build new queries and mutations on your tRPC API. It does not
- * guarantee that a user querying is authorized, but you can still access user session data if they
- * are logged in.
- */
+ * This is the base piece you use to build new queries and mutations on your tRPC API.
+ * */
+
 export const publicProcedure = t.procedure.use(timingMiddleware);
+
+/*
+ * Private (authenticated) procedure
+ *
+ * Only users who have a token can use this type of procedure.
+ * It is created to limit user game sessions per day to save money
+ * on the OpenAI API.
+ * */
+
+export const privateProcedure = t.procedure.use(verifyUser);

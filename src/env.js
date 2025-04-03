@@ -9,7 +9,7 @@ export const env = createEnv({
   server: {
     NODE_ENV: z.enum(["development", "test", "production"]),
     OPEN_AI_API_KEY: z.string(),
-	DB_REDIS_URL: z.string(),
+    DB_REDIS_URL: z.string(),
     JWT_SECRET: z.string(),
   },
 
@@ -30,7 +30,7 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     OPEN_AI_API_KEY: process.env.OPEN_AI_API_KEY,
     JWT_SECRET: process.env.JWT_SECRET,
-	DB_REDIS_URL: process.env.DB_REDIS_URL
+    DB_REDIS_URL: process.env.DB_REDIS_URL,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**

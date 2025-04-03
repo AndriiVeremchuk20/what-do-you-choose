@@ -8,15 +8,21 @@ import { type Message } from "~/services/openai/schema";
 import { Loader } from "~/components/lib/loader";
 import { motion } from "framer-motion";
 import { type Story } from "~/config/stories";
-import { useRouter } from "next/navigation";
 
 export const Game = ({ storyTemplate }: { storyTemplate: Story }) => {
-  const router = useRouter();
   const [isStarted, setIsStarted] = useState<boolean>(false);
   const [typed, setTyped] = useState<boolean>(false);
   const [storySteps, setStorySteps] = useState<Message[]>([]);
 
   const nextStoryMutation = api.game.generateText.useMutation({});
+
+  const {mutate: startGame} = api.game.startStory.useMutation({onSuccess(data){
+	console.log(data);},
+
+	onError(e){
+		console.log(e);
+	}
+  });
 
   const handleOptionClick = (value: string) => {
     setStorySteps((prev) => [
@@ -35,6 +41,8 @@ export const Game = ({ storyTemplate }: { storyTemplate: Story }) => {
 
   const handleStartClick = () => {
     setIsStarted(true);
+
+	startGame();
 
     nextStoryMutation.mutate({
       storyText: storyTemplate.description,
