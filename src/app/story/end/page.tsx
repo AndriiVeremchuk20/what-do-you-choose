@@ -1,15 +1,19 @@
-"use client"
+"use client";
 
 import Link from "next/link";
-import {BackArrowIcon} from "~/components/svgs";
+import { BackArrowIcon } from "~/components/svgs";
 
-export default function EndStory(){
-
-	return <main className="h-screen flex flex-col justify-center items-center bg-gray-900 text-white">
-    <div className="text-4xl font-bold mb-4">The End..</div>
-    <div className="text-lg mb-6 opacity-80">We hope you enjoyed</div>
-    <Link href="/stories" className="hover:scale-95 duration-300 flex space-x-3 items-center hover:space-x-2">
-      <BackArrowIcon/> <span>Back to all stories</span>
-    </Link>
-  </main>
+export default function EndStory() {
+  return (
+    <main className="flex h-screen flex-col items-center justify-center bg-gray-900 text-white">
+      <div className="mb-4 text-4xl font-bold">The End..</div>
+      <div className="mb-6 text-lg opacity-80">We hope you enjoyed</div>
+      <Link
+        href="/stories"
+        className="flex items-center space-x-3 duration-300 hover:scale-95 hover:space-x-2"
+      >
+        <BackArrowIcon /> <span>Back to all stories</span>
+      </Link>
+    </main>
+  );
 }

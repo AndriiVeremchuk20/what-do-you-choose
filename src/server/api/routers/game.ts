@@ -1,19 +1,57 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { continueStory } from "~/services/openai";
+import {
+  createTRPCRouter,
+  privateProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
+import { continueStory, generateImage } from "~/services/openai";
 import { messageSchema } from "~/services/openai/schema";
+import Stories from "~/config/stories";
+import APP_CONFIG from "~/config/app";
+
+const {GAME_LIMIT} = APP_CONFIG;
+
+
+
+
+//const checkGameLimitProcedure = privateProcedure.use();
 
 export const gameRouter = createTRPCRouter({
-  generateText: publicProcedure
+  getStories: publicProcedure.input(z.object({})).query(() => {
+    //get data from db (nice to have)
+    const stories = [...Stories];
+
+    return { stories };
+  }),
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  startStory: privateProcedure
+    .mutation(async ({ ctx: { redis, session: {user} } }) => {
+	
+		const {id} = user;
+		const res = await redis.incr(`user_count:${id}`);
+
+		if(res > GAME_LIMIT){
+			throw new TRPCError({code: "FORBIDDEN", message: "Game limit per day expired"})	
+		}
+
+		return {expire_in: GAME_LIMIT - res}
+    }),
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  generateText: privateProcedure
     .input(
       z.object({ storyText: z.string(), messages: z.array(messageSchema) }),
     )
-    .query(async ({ input }) => {
+    .mutation(async ({ input, ctx: {redis, session: {user}} }) => {
+
       const { storyText, messages } = input;
-   
-	  try {
+
+      try {
         const nextPartStory = await continueStory(storyText, messages);
+
+        console.log(nextPartStory);
 
         return nextPartStory;
       } catch (error) {
@@ -26,12 +64,13 @@ export const gameRouter = createTRPCRouter({
       }
     }),
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   generateImage: publicProcedure
     .input(z.object({ description: z.string() }))
-    .mutation(async ({}) => {
+    .mutation(async ({input}) => {
       //const { description } = input;
 
       //const imageUrl = await generateImage(description);
-      return "hello"; //imageUrl;
+      return"test" //imageUrl;
     }),
 });
