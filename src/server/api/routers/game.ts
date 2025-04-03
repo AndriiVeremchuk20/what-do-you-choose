@@ -30,7 +30,7 @@ export const gameRouter = createTRPCRouter({
     .mutation(async ({ ctx: { redis, session: {user} } }) => {
 	
 		const {id} = user;
-		const res = await redis.incr(`user_count:${id}`);
+		const res = await redis.incr(`user:${id}`);
 
 		if(res > GAME_LIMIT){
 			throw new TRPCError({code: "FORBIDDEN", message: "Game limit per day expired"})	

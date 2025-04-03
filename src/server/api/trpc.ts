@@ -101,7 +101,8 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
 
 const verifyUser = t.middleware(async ({ ctx, next }) => {
   // parse token "Bearer ****token****" -> *****token*****
-  const token = (ctx.headers.get("authorization") as string).split(" ")[1];
+  const tokenLine = ctx.headers.get("authorization");
+  const token = tokenLine!.toString().split(" ").at(1);  
 
   if (!token) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
@@ -115,20 +116,15 @@ const verifyUser = t.middleware(async ({ ctx, next }) => {
   }
 
   // get num of user games and compare with limit 
-  const numGames = await ctx.redis.get(`user_count:${user.id}`);
-
-  if(!numGames){
-    await ctx.redis.set(`user_count:${user.id}`, 0);
-	return next ({ctx: {session: {user, games: 0} }});
-  }
+  const numGames = await ctx.redis.get(`user:${user.id}`);
 
   const games = Number(numGames);
   
   if(games >= APP_CONFIG.GAME_LIMIT){
-	throw new TRPCError({code: "FORBIDDEN"})
+	throw new TRPCError({code: "FORBIDDEN", message: "Game limit expired"})
   }
 
-  return next({ ctx: { session: { user, games } } });
+  return next({ ctx: { session: { user} } });
 });
 
 /**
